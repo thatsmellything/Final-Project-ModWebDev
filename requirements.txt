@@ -1,0 +1,63 @@
+
+
+For the final project, you will be deciding what to build. I will provide you with a list of general, technical requirements and you will come up with an app that meets those requirements. For this project you will write up a project proposal. Your proposal should have the following sections:
+
+    General Overview
+        Briefly describe your application, its general use case, why it would be useful etc...
+    Technical Challenges
+        Describe what technical difficulties you anticipate encountering and how you will solve them: for example "I may not have enough screen space to display all of the information I want to, so I will need to implement a swiping system that allows users to swipe between different pages quickly".
+        Describe what knowledge you will need to acquire, for example: "To build this app I will need to learn how to request data from Spotify using a web-based API"
+    Requirements
+        Describe how the app you are building meets the requirements for the project. Describe which tech you will use and why you need it / how you will use it.
+    Time Estimation
+        Estimate how long it will take you to implement the project, the ideal range would be roughly 15-20 hrs per person
+            A simple statement here is not enough, you should provide a more detailed estimate by estimating each of the features of your app for example: "I will spend 2 hours implementing authentication, 3 hours building/refining the UI, 5 hours implementing the location-based chat logic, for a total of 11 hours".
+            Try to be realistic here, if I see things like: "I am going to build a TikTok clone in 12 hours", I will reject your proposal.
+            You likely have a bunch of great ideas that don't fit in the scope of this final project. You do not need to build something that is feature complete, so long as it meets the requirements and is of the right scope. If you wanted to build a TikTok clone, you might identify a much smaller subset of features and implement those as a starting point.
+    Group Members
+        The names, and A numbers of your group members, if you are the only one working on the project you can omit this section.
+        This section is very important, as students who submit a project as part of a group that is not listed on the proposal will not receive credit.
+
+Group Work
+
+For this project, you are allowed to work in groups of up to 4 people. You are NOT required to work in a group. Keep in mind that if you are working in a group I expect your projects to scale accordingly (15-20 hours for 1 person, 30-40 for 2, 45-60 for 3 etc...). Also, in the real world, the developer that contributes 10 lines of code and the developer that contributes 10000 lines of code get paid the same. This will be the case for the assignment, all members of the group will receive the same score. Because of this, I encourage you to choose your group members carefully as you will all live or die by the success of your projects.
+
+Nobody can be added to or removed from your group after the proposal's due date.
+Proposal Rejection
+
+You will know I approve your proposal by the score I give you on this assignment in Canvas. If you receive 100% then you have been approved. If you receive a 0 you have been rejected. However, fear not, because I will provide you with some feedback about why I rejected your proposal and what you need to do to fix it. At that point, you (and everybody in your group) can resubmit the proposal and receive full points. Eventually, everybody will receive full points on the proposal so think of these as free points (provided you actually do the proposal).
+
+Most likely, I will not reject your proposal but if I do it will likely be for one, or more, of the following reasons:
+
+    The proposal is incomplete. When I say incomplete I mean missing entire sections, not just that maybe you could have gone into a little more detail.
+    I cannot discern if your project meets the requirements.
+    The project you propose is too easy or too hard. There will be a lot of wiggle room here and if I reject your proposal for this reason I will likely just suggest minor changes to your project to make the difficulty more appropriate. It will be very difficult to come up with an app that meets all of the requirements but is still too easy.
+
+Objectives
+
+    Build a web application that integrates more advanced features.
+    Integrate with 3rd party services
+
+Requirements
+
+Whatever app you come up with must meet the following requirements. Keep in mind this is minimum set:
+
+    Your app should use at least 3 of the following 3rd parties
+        Mongo Atlas
+        Firebase Auth
+        Firebase File Storage
+        Firebase Firestore (or Realtime DB)
+        Google Maps
+        Map Box
+        Another 3rd party not listed here (include this in your proposal)
+    You must implement your app using one of theses application configurations
+        Express + Websockets (you must use websockets in a meaningful way in your application)
+        Firebase as a Backend + host your website somewhere (github pages is easy)
+        Next JS + either Mongo DB or Firebase + host your application on vercel.
+        If you are interested in a different configuration (for example if you want to build a django or rails) I might allow it so describe it in your proposal.
+    You should integrate with at least one of the following APIs
+        Web Assembly
+        Geolocation
+        Web Workers
+        Service Workers
+
