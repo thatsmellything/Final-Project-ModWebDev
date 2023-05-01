@@ -7,14 +7,14 @@ import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 type Post = {
-  image: any,
+  image: string,
   title: string,
   description: string,
   location: string,
   id: string,
 }
 
-export const Chat = () => {
+export const Posts = () => {
   const user = useContext(UserContext);
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -48,10 +48,10 @@ export const Chat = () => {
     return posts
   }
 
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
+  const [locationLoaded, setLocationLoaded] = useState(false);
   function getCurrentGPSLocation() {
-    const [lat, setLat] = useState(0);
-    const [lon, setLon] = useState(0);
-    const [locationLoaded, setLocationLoaded] = useState(false);
     useEffect(() => {
       // navigator.geolocation.getCurrentPosition((location) => {
       //   setLocationLoaded(true);
@@ -132,7 +132,6 @@ export const Chat = () => {
 
   const postSection = returnPosts()
 
-  const [url, setUrl] = useState('');
   async function uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement;
     const file = target.files?.[0];
@@ -141,8 +140,21 @@ export const Chat = () => {
 
     // likely in different place
     const downloadUrl = await getDownloadURL(ref(storage, `/images/${file!.name || ''}`));
-    setUrl(downloadUrl);
+
+    // Add a new document with a generated id.
+    const docRef = await addDoc(collection(db, "posts"), {
+      image: downloadUrl,
+      title: title,
+      description: description,
+      lat: lat,
+      lon: lon
+    });
+    console.log("Document written with ID: ", docRef.id);
+
   }
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   return (
     <>
@@ -150,8 +162,8 @@ export const Chat = () => {
         <h1>HikePoster</h1>
         <div>Make a Post</div>
         {/* File browser for selection */}
-        <textarea placeholder="Title"></textarea>
-        <textarea placeholder="Description"></textarea>
+        <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
         <input type="file" onChange={uploadFile}/>
         <br></br>
         <button>Submit Post</button>

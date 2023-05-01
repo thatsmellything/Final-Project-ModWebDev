@@ -25,7 +25,7 @@ export const Layout = () => {
     });
 
     if (!loading) {
-      navigate(loggedIn ? '/chat' : '/login');
+      navigate(loggedIn ? '/posts' : '/login');
     }
     return cleanup;
   }, [loggedIn, loading]);
