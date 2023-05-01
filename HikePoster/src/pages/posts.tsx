@@ -10,8 +10,10 @@ type Post = {
   image: string,
   title: string,
   description: string,
-  location: string,
+  lat: string,
+  lon: string,
   id: string,
+  author: string,
 }
 
 export const Posts = () => {
@@ -21,15 +23,12 @@ export const Posts = () => {
   useEffect(() => {
     // TODO load users rooms
     async function loadPosts() {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, "posts"),
-        )
-      );
+      // get posts from db
+      const querySnapshot = await getDocs(collection(db, "posts"));
       querySnapshot.forEach((doc) => {
-        posts.push({ ...doc.data(), id: doc.id } as Post);
+        posts.push({...doc.data(), id : doc.id} as Post)
       });
-      setPosts(posts);
+      setPosts([...posts]);
     }
     loadPosts();
   }, []);
@@ -89,48 +88,41 @@ export const Posts = () => {
     // return ID
     return 1
   }
-  
-    
 
 
   function returnPosts() {
-    // get posts from db
-    var posts = makeTestPosts();
-    const returnMe = []
+    //var posts = makeTestPosts();
     //const x = 10
     // for each post in db, return photograph attached, title, description, and location
-    for (let i = posts.length - 1; i >= 0; i--) {
-      returnMe[i] = (
-        <>
-          <div className={"post"+i}>
-            
-            <h2>{ posts[i][1] }</h2>
-            {/* isnert random image */}
-            {/* https://picsum.photos/200/300 */}
-            <img src={ posts[i][0].toString() } alt="react logo" />
-            { /* take the image and run it through findGPS */}
-            <p>GPS: { }</p>
-            <p>description {posts[i][2]}</p>
-            <div className="location">
-              location {posts[i][3]}
-              <p>ID: {i}</p>
-            </div>
+    const returnMe = posts.map((post) => (
+      <>
+        <div key={post.id} className={"post"}>
+              
+          <h2>{ post.title }</h2>
+          {/* isnert random image */}
+          {/* https://picsum.photos/200/300 */}
+          <img src={ post.image } alt="viewpoint" />
+          { /* take the image and run it through findGPS */}
+          <p>description { post.description }</p>
+          <div className="location">
+            location
+            <p>Lat: { post.lat }, Lon: { post.lon }</p>
+            <p>ID: { post.id }</p>
           </div>
-          <br></br>
-          <br></br>
-        </>
-      )
-    }
+        </div>
+        <br></br>
+        <br></br>
+      </>
+    ))
+    console.log(returnMe);
 
-  return (
-    <>
-      {returnMe.reverse()}
-    </>
-  );
+    return (
+      <>
+        {returnMe.reverse()}
+      </>
+    );
 
   }
-
-  const postSection = returnPosts()
 
   async function uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement;
@@ -147,7 +139,8 @@ export const Posts = () => {
       title: title,
       description: description,
       lat: lat,
-      lon: lon
+      lon: lon,
+      author: user?.uid
     });
     console.log("Document written with ID: ", docRef.id);
 
@@ -174,7 +167,7 @@ export const Posts = () => {
         <br></br>
         <div className="postssection">
           {/* call function returnPosts */}
-          {postSection}
+          {returnPosts()}
         </div>
       </div>
     </>
