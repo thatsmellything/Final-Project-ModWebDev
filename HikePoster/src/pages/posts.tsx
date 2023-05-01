@@ -7,10 +7,11 @@ import { db, rtdb } from "../lib/firebase";
 import {ref, onChildAdded, push, set} from "firebase/database";
 
 type Post = {
+  image: any,
+  title: string,
+  description: string,
+  location: string,
   id: string,
-  authorId: string,
-  authorEmail: string,
-  content: string,
 }
 
 export const Chat = () => {
@@ -33,20 +34,86 @@ export const Chat = () => {
     loadPosts();
   }, []);
 
+
+  function makeTestPosts() {
+    var posts = []
+    for (let i = 0; i < 10; i++) {
+      var post = []
+      post[0] = "/src/assets/test.jpg"
+      post[1] = "London Bridge" + i
+      post[2] = "description" + i
+      post[3] = getCurrentGPSLocation()
+      posts[i] = post
+    }
+    return posts
+  }
+
+  function getCurrentGPSLocation() {
+    const [lat, setLat] = useState(0);
+    const [lon, setLon] = useState(0);
+    const [locationLoaded, setLocationLoaded] = useState(false);
+    useEffect(() => {
+      // navigator.geolocation.getCurrentPosition((location) => {
+      //   setLocationLoaded(true);
+      //   setLat(location.coords.latitude);
+      //   setLon(location.coords.longitude);
+      // }, (err) => {
+      //   console.log(err)
+      // }, {
+      //   enableHighAccuracy: true,
+      // })
+      const watch = navigator.geolocation.watchPosition((location) => {
+        setLat(location.coords.latitude);
+        setLon(location.coords.longitude);
+        setLocationLoaded(true);
+      }, (err) => {
+        console.log(err)
+      }, {
+        enableHighAccuracy: true,
+      })
+
+      return () => navigator.geolocation.clearWatch(watch)
+    }, []);
+
+    return (
+      <div className="location">
+        {locationLoaded ? (`Lat: ${lat}, Lon: ${lon}`) : 'Loading...'}
+      </div>
+    )
+  }
+
+
+
+  function saveToDB(image: any, title: string, description: string, location: string) {
+    // save to db
+    // return ID
+    return 1
+  }
+  
+    
+
+
   function returnPosts() {
-    const post = []
-    const x = 10
+    // get posts from db
+    var posts = makeTestPosts()
+    const returnMe = []
+    //const x = 10
     // for each post in db, return photograph attached, title, description, and location
-    for (let i = 0; i < x; i++) {
-      post[i] = (
+    for (let i = posts.length - 1; i >= 0; i--) {
+      returnMe[i] = (
         <>
-          <div className="post">
+          <div className={"post"+i}>
             
-            <h2>title</h2>
+            <h2>{ posts[i][1] }</h2>
             {/* isnert random image */}
-            <p>description</p>
+            {/* https://picsum.photos/200/300 */}
+            <img src={ posts[i][0] } alt="react logo" />
+            { /* take the image and run it through findGPS */}
+            <p>GPS: { }</p>
+            <p>description {posts[i][2]}</p>
             <div className="location">
-              <p>location</p>
+              location {posts[i][3]}
+              <p>ID: {i}</p>
             </div>
           </div>
           <br></br>
@@ -55,11 +122,12 @@ export const Chat = () => {
       )
     }
 
-    return (
-      <>
-        {post}
-      </>
-    );
+  return (
+    <>
+      {returnMe.reverse()}
+    </>
+  );
+
   }
 
   const postSection = returnPosts()
@@ -84,6 +152,6 @@ export const Chat = () => {
         </div>
       </div>
     </>
-  );
-  
+  )
+
 }
