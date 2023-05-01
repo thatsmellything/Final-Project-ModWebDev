@@ -3,8 +3,8 @@ import UserContext from "../context/user";
 import { auth } from "../lib/firebase";
 import { signOut } from "firebase/auth";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
-import { db, rtdb } from "../lib/firebase";
-import {ref, onChildAdded, push, set} from "firebase/database";
+import { db, storage } from "../lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 type Post = {
   image: any,
@@ -132,6 +132,18 @@ export const Chat = () => {
 
   const postSection = returnPosts()
 
+  const [url, setUrl] = useState('');
+  async function uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const target = e.target as HTMLInputElement;
+    const file = target.files?.[0];
+    const fileRef = ref(storage, `/images/${file!.name || ''}`)
+    const snapshot = await uploadBytes(fileRef, file!);
+
+    // likely in different place
+    const downloadUrl = await getDownloadURL(ref(storage, `/images/${file!.name || ''}`));
+    setUrl(downloadUrl);
+  }
+
   return (
     <>
       <div className="header">
@@ -140,6 +152,7 @@ export const Chat = () => {
         {/* File browser for selection */}
         <textarea placeholder="Title"></textarea>
         <textarea placeholder="Description"></textarea>
+        <input type="file" onChange={uploadFile}/>
         <br></br>
         <button>Submit Post</button>
         <button onClick={() => signOut(auth)}>Logout</button>
