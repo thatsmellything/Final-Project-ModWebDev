@@ -95,7 +95,7 @@ export const Chat = () => {
 
   function returnPosts() {
     // get posts from db
-    var posts = makeTestPosts()
+    var posts = makeTestPosts();
     const returnMe = []
     //const x = 10
     // for each post in db, return photograph attached, title, description, and location
@@ -107,7 +107,7 @@ export const Chat = () => {
             <h2>{ posts[i][1] }</h2>
             {/* isnert random image */}
             {/* https://picsum.photos/200/300 */}
-            <img src={ posts[i][0] } alt="react logo" />
+            <img src={ posts[i][0].toString() } alt="react logo" />
             { /* take the image and run it through findGPS */}
             <p>GPS: { }</p>
             <p>description {posts[i][2]}</p>
