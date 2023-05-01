@@ -21,7 +21,7 @@ export const Layout = () => {
         setUser(null)
         setLoggedIn(false);
       }
-      console.log("Our user is: ", user);
+      //console.log("Our user is: ", user);
     });
 
     if (!loading) {
