@@ -142,6 +142,7 @@ export const Chat = () => {
         <textarea placeholder="Description"></textarea>
         <br></br>
         <button>Submit Post</button>
+        <button onClick={() => signOut(auth)}>Logout</button>
         <br></br>
         <br></br>
         <br></br>
