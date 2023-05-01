@@ -2,7 +2,7 @@ import { Children, useLayoutEffect, useState } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { Layout } from './pages/layout';
 import { Login } from './pages/login';
-import { Chat } from './pages/posts';
+import { Posts } from './pages/posts';
 
 const router = createHashRouter([
   {
@@ -14,8 +14,8 @@ const router = createHashRouter([
         element: <Login />
       },
       {
-        path: '/chat',
-        element: <Chat />
+        path: '/posts',
+        element: <Posts />
       }
     ]
   }
