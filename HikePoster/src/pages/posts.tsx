@@ -6,6 +6,7 @@ import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Maps from "./maps";
+import "..App.css";
 import ReactDOMServer from 'react-dom/server'
 
 type Post = {
@@ -83,7 +84,10 @@ export const Posts = () => {
         <h2>{ post.title }</h2>
         {/* isnert random image */}
         {/* https://picsum.photos/200/300 */}
-        <img src={ post.image } alt="viewpoint" />
+        <div className="center">
+          <img src={ post.image } alt="viewpoint" />
+        </div>
+        
         { /* take the image and run it through findGPS */}
         <p>description { post.description }</p>
         <div className="location" id="location">
