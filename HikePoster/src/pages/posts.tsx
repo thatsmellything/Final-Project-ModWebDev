@@ -5,6 +5,8 @@ import { signOut } from "firebase/auth";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import Maps from "./maps";
+import ReactDOMServer from 'react-dom/server'
 
 type Post = {
   image: string,
@@ -84,8 +86,25 @@ export const Posts = () => {
         <img src={ post.image } alt="viewpoint" />
         { /* take the image and run it through findGPS */}
         <p>description { post.description }</p>
-        <div className="location">
-          location
+        <div className="location" id="location">
+          <div id="map"></div>
+          {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}
+          <button onClick={
+            () => {
+
+              Maps(Number(post.lat), Number(post.lon)) 
+
+              // var logMe = ReactDOMServer.renderToString(openMe)
+
+              // document.getElementById("map")!.innerHTML = logMe
+
+              // console.log(logMe)
+
+            }
+
+
+
+            }>Location</button>
           <p>Lat: { post.lat }, Lon: { post.lon }</p>
           <p>ID: { post.id }</p>
         </div>
