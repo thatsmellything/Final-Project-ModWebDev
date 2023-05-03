@@ -7,12 +7,17 @@ By clicking the "Find Location" button, the user will be redirected to a map whe
 ### STARTING UP
 
 Download git repo
-$ git clone https://github.com/thatsmellything/Final-Project-ModWebDev.git
+
+$git clone https://github.com/thatsmellything/Final-Project-ModWebDev.git
 
 $cd Final-Project-ModWebDev-master
+
 $cd HikePoster
+
 $yarn
+
 $yarn build
+
 $yarn dev
 
 Navigate to http://localhost:5173/
