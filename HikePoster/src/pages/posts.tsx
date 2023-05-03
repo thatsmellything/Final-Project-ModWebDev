@@ -87,11 +87,11 @@ export const Posts = () => {
         {/* isnert random image */}
         {/* https://picsum.photos/200/300 */}
         <div>
-          <img src={ post.image } alt="viewpoint" width="400px" id="postImage"/>
+          <img src={ post.image } alt="viewpoint" id="postImage"/>
         </div>
         
         { /* take the image and run it through findGPS */}
-        <p>description { post.description }</p>
+        <p>Description: { post.description }</p>
         <div className="location" id="location">
           <div id="map"></div>
           {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}

@@ -23,11 +23,11 @@ export const Login = () => {
 
   return (
     // <div className="container">
-    <body>
-    <div className="center">
-      <div className="login">
-        <div className="center">Login / Create Account</div>
-        <div className="center">
+    
+    <div className="header">
+      <div>
+        <div>Login / Create Account</div>
+        <div>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"/>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
         </div>  
@@ -37,6 +37,6 @@ export const Login = () => {
         </div>
       </div>
     </div>
-    </body>
+    
   )
 }
