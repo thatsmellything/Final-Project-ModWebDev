@@ -6,7 +6,8 @@ import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Maps from "./maps";
-import "..App.css";
+import "./posts.css";
+
 import ReactDOMServer from 'react-dom/server'
 
 type Post = {
@@ -80,8 +81,9 @@ export const Posts = () => {
     // for each post in db, return photograph attached, title, description, and location
     const returnMe = posts.map((post) => (
       <div key={post.id} className={"post"}>
+       
             
-        <h2>{ post.title }</h2>
+        <h2 className="center">{ post.title }</h2>
         {/* isnert random image */}
         {/* https://picsum.photos/200/300 */}
         <div className="center">
@@ -89,28 +91,30 @@ export const Posts = () => {
         </div>
         
         { /* take the image and run it through findGPS */}
-        <p>description { post.description }</p>
+        <p className="center">description { post.description }</p>
         <div className="location" id="location">
           <div id="map"></div>
           {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}
-          <button onClick={
-            () => {
+          <div className="center">
+            <button onClick={
+              () => {
 
-              Maps(Number(post.lat), Number(post.lon)) 
+                Maps(Number(post.lat), Number(post.lon)) 
 
-              // var logMe = ReactDOMServer.renderToString(openMe)
+                // var logMe = ReactDOMServer.renderToString(openMe)
 
-              // document.getElementById("map")!.innerHTML = logMe
+                // document.getElementById("map")!.innerHTML = logMe
 
-              // console.log(logMe)
+                // console.log(logMe)
 
-            }
+              }
 
 
 
-            }>Location</button>
-          <p>Lat: { post.lat }, Lon: { post.lon }</p>
-          <p>ID: { post.id }</p>
+              }>Location</button>
+          </div>  
+          <p className="center">Lat: { post.lat }, Lon: { post.lon }</p>
+          <p className="center">ID: { post.id }</p>
         </div>
       </div>
     ))
@@ -159,17 +163,24 @@ export const Posts = () => {
 
   return (
     <>
+    <body className="greenColor">
       <div className="header">
-        <h1>HikePoster</h1>
-        {locationLoaded ? (`Lat: ${lat}, Lon: ${lon}`) : 'Loading...'}
-        <div>Make a Post</div>
+        <h1 className="center">HikePoster</h1>
+        <div className="center">
+          {locationLoaded ? (`Lat: ${lat}, Lon: ${lon}`) : 'Loading...'}
+        </div>  
+        <div className="center">Make a Post</div>
         {/* File browser for selection */}
-        <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
-        <input type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
+        <div className="center">
+          <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
+          <input type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
+        </div>  
         <br></br>
-        <button onClick={() => {submitPost()}}>Submit Post</button>
-        <button onClick={() => signOut(auth)}>Logout</button>
+        <div className="center">
+          <button onClick={() => {submitPost()}}>Submit Post</button>
+          <button onClick={() => signOut(auth)}>Logout</button>
+        </div>
         <br></br>
         <br></br>
         <br></br>
@@ -179,6 +190,8 @@ export const Posts = () => {
           {returnPosts()}
         </div>
       </div>
+
+    </body>  
     </>
   )
 

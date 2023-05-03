@@ -22,16 +22,21 @@ export const Login = () => {
   }
 
   return (
-    <div className="container">
+    // <div className="container">
+    <body>
+    <div className="center">
       <div className="login">
-        <div>Login / Create Account</div>
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"/>
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
+        <div className="center">Login / Create Account</div>
+        <div className="center">
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"/>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
+        </div>  
         <div className="login-controls">
           <button className="secondary" onClick={signUp}>Create Account</button>
           <button onClick={login}>Sign In</button>
         </div>
       </div>
     </div>
+    </body>
   )
 }
