@@ -111,14 +111,14 @@ export const Posts = () => {
               }>Get Location</button>
           </div>  
           <p>Lat: { post.lat }, Lon: { post.lon }</p>
-          <p>ID: { post.id }</p>
+          <p id="postID">Post ID: { post.id }</p>
         </div>
       </div>
     ))
 
     return (
       <>
-        {returnMe.reverse()}
+        {returnMe}
       </>
     );
 
