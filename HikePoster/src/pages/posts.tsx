@@ -83,19 +83,19 @@ export const Posts = () => {
       <div key={post.id} className={"post"}>
        
             
-        <h2 className="center">{ post.title }</h2>
+        <h2>{ post.title }</h2>
         {/* isnert random image */}
         {/* https://picsum.photos/200/300 */}
-        <div className="center">
-          <img src={ post.image } alt="viewpoint" />
+        <div>
+          <img src={ post.image } alt="viewpoint" width="400px" id="postImage"/>
         </div>
         
         { /* take the image and run it through findGPS */}
-        <p className="center">description { post.description }</p>
+        <p>description { post.description }</p>
         <div className="location" id="location">
           <div id="map"></div>
           {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}
-          <div className="center">
+          <div>
             <button onClick={
               () => {
 
@@ -108,13 +108,10 @@ export const Posts = () => {
                 // console.log(logMe)
 
               }
-
-
-
-              }>Location</button>
+              }>Get Location</button>
           </div>  
-          <p className="center">Lat: { post.lat }, Lon: { post.lon }</p>
-          <p className="center">ID: { post.id }</p>
+          <p>Lat: { post.lat }, Lon: { post.lon }</p>
+          <p>ID: { post.id }</p>
         </div>
       </div>
     ))
@@ -163,33 +160,35 @@ export const Posts = () => {
 
   return (
     <>
-    <body className="greenColor">
+    <body className="body">
       <div className="header">
-        <h1 className="center">HikePoster</h1>
-        <div className="center">
+        <h1>HikePoster</h1>
+        <div>
           {locationLoaded ? (`Lat: ${lat}, Lon: ${lon}`) : 'Loading...'}
         </div>  
-        <div className="center">Make a Post</div>
+        <div>Make a Post</div>
         {/* File browser for selection */}
-        <div className="center">
+        <div>
           <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
           <input type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
         </div>  
         <br></br>
-        <div className="center">
+        <div>
           <button onClick={() => {submitPost()}}>Submit Post</button>
           <button onClick={() => signOut(auth)}>Logout</button>
         </div>
+      
         <br></br>
         <br></br>
         <br></br>
         <br></br>
-        <div className="postssection">
+        <div>
           {/* call function returnPosts */}
           {returnPosts()}
         </div>
       </div>
+      
 
     </body>  
     </>
