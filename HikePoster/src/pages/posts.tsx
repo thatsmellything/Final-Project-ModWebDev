@@ -81,6 +81,7 @@ export const Posts = () => {
     // for each post in db, return photograph attached, title, description, and location
     const returnMe = posts.map((post) => (
       <div key={post.id} className={"post"}>
+        <hr></hr>
        
             
         <h2>{ post.title }</h2>
