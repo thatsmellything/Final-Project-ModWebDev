@@ -5,7 +5,8 @@ import { signOut } from "firebase/auth";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import Maps from "./maps";
+import { Maps } from "./maps";
+import { key } from "./maps";
 import "./posts.css";
 
 import ReactDOMServer from 'react-dom/server'
@@ -74,6 +75,21 @@ export const Posts = () => {
     return 1
   }
 
+  function googleMap(latitude : string, longitude : string) {
+    return (
+      <div>
+        <iframe
+          width="600"
+          height="450"
+          style={{border:0}}
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          src={"https://www.google.com/maps/embed/v1/place?key=" + key + "&q=" + latitude + "," + longitude}>
+        </iframe>
+      </div>
+    );
+  }
 
   function returnPosts() {
     //var posts = makeTestPosts();
@@ -97,6 +113,7 @@ export const Posts = () => {
           <div id="map"></div>
           {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}
           <div>
+            {googleMap(post.lat, post.lon)}
             <button onClick={
               () => {
 
@@ -109,7 +126,7 @@ export const Posts = () => {
                 // console.log(logMe)
 
               }
-              }>Get Location</button>
+              }>Open Location</button>
           </div>  
           <p>Lat: { post.lat }, Lon: { post.lon }</p>
           <p id="postID">Post ID: { post.id }</p>
@@ -171,8 +188,12 @@ export const Posts = () => {
         {/* File browser for selection */}
         <div>
           <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
+        </div>
+        <div>
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
-          <input type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
+        </div>
+        <div>
+          <input className="file-input" type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
         </div>  
         <br></br>
         <div>

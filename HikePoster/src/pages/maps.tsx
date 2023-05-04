@@ -10,7 +10,7 @@ var api_key = "AIzaSyAc9zFpuwRk68scBCEq2Y1B1yumE19sgGE";
 
 
 
-async function Maps(latitude: number, longitude: number) {
+async function OpenMap(latitude: number, longitude: number) {
 
     var request = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + api_key;
     var apiTracking = await fetch(request)
@@ -22,4 +22,5 @@ async function Maps(latitude: number, longitude: number) {
 
 }
 
-export default Maps;
+export const Maps = OpenMap;
+export const key = api_key;
