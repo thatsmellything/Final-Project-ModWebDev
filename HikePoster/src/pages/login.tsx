@@ -6,12 +6,16 @@ import "./login.css";
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   function signUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({user}) => {
         console.log(user);
       })
+      .catch((error) => {
+        setError(error.message);
+      });
   }
 
 
@@ -20,6 +24,9 @@ export const Login = () => {
       .then(({user}) => {
         console.log(user)
       })
+      .catch((error) => {
+        setError(error.message);
+      });
   }
 
   return (
@@ -38,6 +45,7 @@ export const Login = () => {
           <button className="secondary" onClick={signUp}>Create Account</button>
           <button onClick={login}>Sign In</button>
         </div>
+        <p>{error}</p>
       </div>
     </div>
     

@@ -27,6 +27,7 @@ export const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const [maxMileDistance, setMaxMileDistance] = useState(Math.max());
+  const [sortedByDistance, setSortedByDistance] = useState(false);
 
   useEffect(() => {
     const watch = navigator.geolocation.watchPosition((location) => {
@@ -55,6 +56,13 @@ export const Posts = () => {
     return () => navigator.geolocation.clearWatch(watch);
 
   }, []);
+
+  useEffect(() => {
+    const sortedPosts = [...posts].sort((a, b) => {
+      return getDistance(a.lat, a.lon) - getDistance(b.lat, b.lon);
+    })
+    setPosts(sortedPosts);
+  }, [sortedByDistance]);
 
 
   // function makeTestPosts() {
@@ -96,6 +104,13 @@ export const Posts = () => {
     );
   }
 
+  function getDistance(latitude : string, longitude : string) {
+    const latDist = Math.abs(Number(latitude) - lat) * 69.0;
+    const lonDist = Math.abs(Number(longitude) - lon) * 54.6;
+    const dist = Math.sqrt(Math.pow(latDist, 2) + Math.pow(lonDist, 2));
+    return dist;
+  }
+
   function returnPosts() {
     //var posts = makeTestPosts();
     //const x = 10
@@ -106,6 +121,7 @@ export const Posts = () => {
        
             
         <h2>{ post.title }</h2>
+        <h4>{getDistance(post.lat, post.lon) < 1 ? "Less than 1 mile away" : "About " + Math.floor(getDistance(post.lat, post.lon)) + " miles away"}</h4>
         {/* isnert random image */}
         {/* https://picsum.photos/200/300 */}
         <div>
@@ -204,6 +220,9 @@ export const Posts = () => {
         <div>
           <button onClick={() => {submitPost()}}>Submit Post</button>
           <button className="logout" onClick={() => signOut(auth)}>Logout</button>
+        </div>
+        <div>
+        <button onClick={() => {setSortedByDistance(true)}}>Sort By Distance</button>
         </div>
       
         <br></br>
