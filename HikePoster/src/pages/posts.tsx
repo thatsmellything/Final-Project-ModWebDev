@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/user";
 import { auth } from "../lib/firebase";
 import { signOut } from "firebase/auth";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { Timestamp, orderBy, collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db, storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Maps } from "./maps";
@@ -19,11 +19,14 @@ type Post = {
   lon: string,
   id: string,
   author: string,
+  timestamp: Timestamp
 }
 
 export const Posts = () => {
   const user = useContext(UserContext);
   const [posts, setPosts] = useState<Post[]>([]);
+
+  const [maxMileDistance, setMaxMileDistance] = useState(Math.max());
 
   useEffect(() => {
     const watch = navigator.geolocation.watchPosition((location) => {
@@ -39,7 +42,9 @@ export const Posts = () => {
     // TODO load users rooms
     async function loadPosts() {
       // get posts from db
-      const querySnapshot = await getDocs(collection(db, "posts"));
+      const postsRef = collection(db, "posts");
+      const q = query(postsRef, orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         posts.push({...doc.data(), id : doc.id} as Post)
       });
@@ -108,7 +113,7 @@ export const Posts = () => {
         </div>
         
         { /* take the image and run it through findGPS */}
-        <p>Description: { post.description }</p>
+        <p>{ post.description }</p>
         <div className="location" id="location">
           <div id="map"></div>
           {/* when the button is clicked, open a new window with Maps(lat, lon) as the resulting page */}
@@ -160,13 +165,13 @@ export const Posts = () => {
       description: description,
       lat: lat.toString(),
       lon: lon.toString(),
-      author: user?.uid || ''
+      author: user?.uid || '',
+      timestamp: Timestamp.now()
     }
     // Add a new document with a generated id.
     const docRef = await addDoc(collection(db, "posts"), postData);
 
-    posts.push({...postData, id: docRef.id} as Post);
-    setPosts([...posts]);
+    setPosts([{...postData, id: docRef.id} as Post, ...posts]);
     
     console.log("Document written with ID: ", docRef.id);
 
