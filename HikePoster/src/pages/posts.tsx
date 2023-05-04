@@ -187,10 +187,10 @@ export const Posts = () => {
         <div>Make a Post</div>
         {/* File browser for selection */}
         <div>
-          <textarea value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
+          <textarea className="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title"></textarea>
         </div>
         <div>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
+          <textarea className="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
         </div>
         <div>
           <input className="file-input" type="file" onChange={(e) => setImageFile(e.target.files?.[0])}/>
@@ -198,7 +198,7 @@ export const Posts = () => {
         <br></br>
         <div>
           <button onClick={() => {submitPost()}}>Submit Post</button>
-          <button onClick={() => signOut(auth)}>Logout</button>
+          <button className="logout" onClick={() => signOut(auth)}>Logout</button>
         </div>
       
         <br></br>
